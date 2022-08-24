@@ -35,13 +35,13 @@ If seed data is provided (or you already created it), you can skip this step.
 -- so we can start with a fresh state.
 -- (RESTART IDENTITY resets the primary key)
 
-TRUNCATE TABLE students RESTART IDENTITY; -- replace with your own table name.
+TRUNCATE TABLE albums RESTART IDENTITY; -- replace with your own table name.
 
 -- Below this line there should only be `INSERT` statements.
 -- Replace these statements with your own seed data.
 
-INSERT INTO students (name, cohort_name) VALUES ('David', 'April 2022');
-INSERT INTO students (name, cohort_name) VALUES ('Anna', 'May 2022');
+INSERT INTO albums (title, release_year, arist_id) VALUES ('Doolittle', '1989', '1');
+INSERT INTO students (name, cohort_name) VALUES ('Surfer Rosa', '1988', '1');
 ```
 
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
@@ -60,12 +60,12 @@ Usually, the Model class name will be the capitalised table name (single instead
 
 # Model class
 # (in lib/student.rb)
-class Student
+class Album
 end
 
 # Repository class
 # (in lib/student_repository.rb)
-class StudentRepository
+class AlbumRepository
 end
 ```
 
@@ -80,10 +80,10 @@ Define the attributes of your Model class. You can usually map the table columns
 # Model class
 # (in lib/student.rb)
 
-class Student
+class Album
 
   # Replace the attributes by your own columns.
-  attr_accessor :id, :name, :cohort_name
+  attr_accessor :id, :title, :release_year, :artist_id
 end
 
 # The keyword attr_accessor is a special Ruby feature
@@ -110,36 +110,25 @@ Using comments, define the method signatures (arguments and return value) and wh
 # Repository class
 # (in lib/student_repository.rb)
 
-class StudentRepository
+class AlbumRepository
 
   # Selecting all records
   # No arguments
   def all
     # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students;
+    # SELECT id, title, release_year, artist_id FROM albums;
 
-    # Returns an array of Student objects.
+    # Returns an array of Album objects.
   end
 
   # Gets a single record by its ID
   # One argument: the id (number)
   def find(id)
     # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students WHERE id = $1;
+    # SELECT id, title, release_year, aritst_id FROM albums WHERE id = $1;
 
-    # Returns a single Student object.
+    # Returns a single Album object.
   end
-
-  # Add more methods below for each operation you'd like to implement.
-
-  # def create(student)
-  # end
-
-  # def update(student)
-  # end
-
-  # def delete(student)
-  # end
 end
 ```
 
@@ -162,6 +151,29 @@ albums.length # => 2
 albums.first.id # => '1'
 albums.first.title # => 'Doolittle'
 albums.first.artist_id # => '1'
+
+# 2
+# Get a single album
+
+repo = AlbumRepository.new
+
+
+album = repo.find(1)
+album.title # => 'Doolittle'
+albums.release_year # => '1989'
+album.artist_id # => '1'
+
+# 3
+# Get a single album
+
+repo = AlbumRepository.new
+
+
+album = repo.find(2)
+album.title # => 'Surfer Rosa'
+albums.release_year # => '1988'
+album.artist_id # => '1'
+
 end
 ```
 

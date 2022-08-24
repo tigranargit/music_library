@@ -1,4 +1,4 @@
-# {{TABLE NAME}} Model and Repository Classes Design Recipe
+# Artist Model and Repository Classes Design Recipe
 
 _Copy this recipe template to design and implement Model and Repository classes for a database table._
 
@@ -120,6 +120,13 @@ class ArtistRepository
 
     # Returns an array of Artist objects.
   end
+
+  def find (id)
+  # Executes the SQL query:
+  # SELECT id, name, genre FROM artists WHERE id = $1
+
+  # Returns a single Artist object
+  end 
 end 
 #   # Gets a single record by its ID
 #   # One argument: the id (number)
@@ -162,6 +169,24 @@ artists.length # => 2
 artists.first.id # => 1
 artists.first.name # => 'Pixies'
 
+# 2
+# Find a single artist
+
+repo = ArtistRepository.new
+
+artist = repo.find(1)
+artist.name # => 'Pixies'
+artist.genre # => 'Rock'
+
+
+# 3
+# Find a single artist
+
+repo = ArtistRepository.new
+
+artist = repo.find(2)
+artist.name # => 'ABBA'
+artist.genre # => 'Pop'
 ```
 
 Encode this example as a test.
