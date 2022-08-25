@@ -128,26 +128,44 @@ class ArtistRepository
   # Returns a single Artist object
   end 
 end 
-#   # Gets a single record by its ID
-#   # One argument: the id (number)
-#   def find(id)
-#     # Executes the SQL query:
-#     # SELECT id, name, cohort_name FROM students WHERE id = $1;
+#  
 
-#     # Returns a single Student object.
-#   end
 
 #   # Add more methods below for each operation you'd like to implement.
 
-#   # def create(student)
-#   # end
+#Insert a new artist record 
+# Takes an Artist object in argument 
 
-#   # def update(student)
-#   # end
+def create(artist)
+# Execute SQL query:
+# INSERT INTO artists (name, genre) VALUES ($1, $2);
 
-#   # def delete(student)
-#   # end
-# end
+# Doesn't need to return anything (only creates the record)
+end
+
+# Deletes an artist record 
+# given its id
+
+def delete(artist)
+
+# Executes the SQL:
+# DELETE FROM artists WHERE id = $1;
+
+# Returns nothing (only deletes the record)
+end
+
+# Update an artis record 
+# Take an Artist object (with the updated fields)
+
+def update(artist)
+
+# Executes the SQL:
+# UPDATE artists SET name = $1, genre = $2 WHERE id = $3;
+
+# Returns nothing (only updates the record)
+end
+
+end
 ```
 
 ## 6. Write Test Examples
@@ -187,6 +205,55 @@ repo = ArtistRepository.new
 artist = repo.find(2)
 artist.name # => 'ABBA'
 artist.genre # => 'Pop'
+
+# 4 
+# Create a new artist
+
+repo =  ArtistRepository.new 
+
+artist = Artist.new
+artist.name = 'Beatles'
+artist.genre = 'Pop'
+
+repo.create(artist) # = > nil
+
+artists = repo.all
+
+last_artist = artists.last
+last_artist.name # => 'Beatles'
+last_artis.genre # => 'Pop'
+
+#5
+# Delete an artist
+
+repo =  ArtistRepository.new 
+
+id_to_delete = 1
+
+repo.delete(id_to_delete)
+
+all_artists = repo.all
+
+all_artists.length # => 1
+all_artists.first.id # => '2'
+
+#6 
+# Update an artist
+
+repo =  ArtistRepository.new 
+
+artist = repo.find(1)
+
+artist.name = 'Something else'
+artist.genre = 'Disco'
+
+repo.update(artist)
+
+updated_artist = repo.find(1)
+
+updated_artist.name # => 'Something Else'
+updated_artist.genre # => 'Disco'
+
 ```
 
 Encode this example as a test.
